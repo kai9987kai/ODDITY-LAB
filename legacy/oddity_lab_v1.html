@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ODDITY LAB — Synthetic Neuron Graft Experiment</title>
+<style>
+:root{color-scheme:dark;--bg:#080d18;--panel:#101827;--panel2:#121d30;--line:#2a3a50;--text:#e8f0ff;--muted:#9aacbf;--teal:#65e4d4;--violet:#bf93ff;--amber:#f6c779;--pink:#ff83b4}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,select,input{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}.app{max-width:1240px;margin:auto;padding:22px;min-height:720px;background:radial-gradient(circle at 80% -10%,#22214c 0,transparent 46%)}.eyebrow{text-transform:uppercase;letter-spacing:.17em;font-size:10px;font-weight:800;color:var(--teal)}h1{font-size:clamp(22px,4vw,36px);line-height:1.05;letter-spacing:-.045em;margin:6px 0 9px}p{margin:0}.sub{color:var(--muted);max-width:670px;font-size:13px}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin:0 0 20px}.status{white-space:nowrap;border:1px solid #37594f;background:#102721;color:#8cead0;border-radius:20px;padding:7px 10px;font-size:11px;font-weight:700;letter-spacing:.05em}.status.off{border-color:#574d38;color:var(--amber);background:#272117}.card{background:linear-gradient(150deg,rgba(21,32,51,.98),rgba(13,21,37,.98));border:1px solid var(--line);border-radius:15px;overflow:hidden;min-width:0}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}.stat{padding:13px 15px;position:relative}.stat .label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}.stat .number{font-size:clamp(21px,3vw,31px);font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1.2;margin:7px 0 4px}.stat .hint{color:var(--muted);font-size:11px}.stat.teal .number{color:var(--teal)}.stat.purple .number{color:var(--violet)}.stat.amber .number{color:var(--amber)}.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(250px,.88fr);gap:12px}.visual{min-width:0}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:13px 16px 0}.sectionhead h2{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:0}.small{font-size:11px;color:var(--muted)}.legend{display:flex;gap:13px;flex-wrap:wrap}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle}.dot.teal{background:var(--teal)}.dot.purple{background:var(--violet)}.dot.pink{background:var(--pink)}canvas{display:block;width:100%;max-width:100%}#network{height:312px;cursor:crosshair}#chart{height:160px}.charthead{padding-top:9px;border-top:1px solid var(--line)}.streambox{border-top:1px solid var(--line);padding:10px 14px 13px}.streamhead{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-bottom:8px;gap:8px}.bits{display:flex;gap:4px;flex-wrap:nowrap;overflow:hidden}.bit{flex:1;min-width:0;text-align:center;border:1px solid #324056;border-radius:4px;background:#1c2940;color:#afc6dd;font-size:10px;font-weight:700;padding:2px 0}.bit.one{background:#203c41;color:#9ff2dd;border-color:#3a6463}.bit.newest{box-shadow:inset 0 0 0 1px var(--amber)}.controls{padding:16px;display:flex;flex-direction:column;gap:15px}.controls h2{font-size:14px;letter-spacing:.02em;margin:0}.actionrow{display:flex;flex-wrap:wrap;gap:8px}.btn{border:1px solid #3a4b63;background:#1b2940;color:var(--text);padding:9px 12px;border-radius:8px;font-size:12px;font-weight:750;transition:background .15s}.btn:hover{background:#2b3d57}.btn.primary{background:#7256c8;border-color:#9479e2;color:white}.btn.primary:hover{background:#876ae4}.btn.shock{background:#392337;border-color:#8e476e;color:#ffb2d4}.group{display:flex;flex-direction:column;gap:8px}.field{display:flex;justify-content:space-between;gap:10px;font-size:12px;font-weight:700}.field span:last-child{color:var(--muted);font-variant-numeric:tabular-nums}.controls select,.controls input[type=number]{width:100%;border-radius:8px;background:#0c1525;border:1px solid #3b4b61;padding:8px 10px;color:var(--text);min-width:0}.controls input[type=range]{width:100%;accent-color:#a886ef}.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini-label{display:block;font-weight:700;color:var(--muted);font-size:11px;margin-bottom:5px}.switch{display:flex;gap:10px;align-items:flex-start;border:1px solid #304056;padding:8px 10px;border-radius:9px;background:#101b2d;cursor:pointer}.switch input{margin:3px 0 0;accent-color:#a886ef}.switch span{display:block;font-weight:700;font-size:12px}.switch small{display:block;font-size:10px;color:var(--muted);font-weight:400;line-height:1.35;margin-top:2px}.switchgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.controlfoot{border-top:1px solid #2c3e56;padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.note{color:var(--muted);font-size:10px}.bottom{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;margin-top:12px}.readout{padding:14px 16px}.readout h3,.explain h3{margin:0 0 11px;font-size:12px;letter-spacing:.08em;text-transform:uppercase}.meterhead{display:flex;justify-content:space-between;font-size:11px;margin:9px 0 5px}.meter{height:11px;border-radius:8px;overflow:hidden;background:#253148}.meter>div{height:100%;width:50%;transition:width .12s ease;border-radius:8px}.meter .base{background:linear-gradient(90deg,#309a92,#6ce0d2)}.meter .cand{background:linear-gradient(90deg,#7655c1,#c298fb)}.event{margin-top:12px;border-top:1px solid var(--line);padding-top:9px;display:flex;gap:8px;align-items:start;color:var(--muted);font-size:11px}.event .symbol{color:var(--amber)}.explain{padding:14px 16px}.explain p{color:var(--muted);font-size:11px;line-height:1.55}.explain details{margin-top:11px;border-top:1px solid var(--line);padding-top:10px;color:#c5d6ea;font-size:11px}.explain summary{font-weight:750;cursor:pointer}.explain code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;color:#c8b7fa;white-space:normal}.explain .math{margin-top:8px;background:#0b1422;padding:10px;border-radius:8px;line-height:1.75}.foot{margin-top:12px;color:var(--muted);font-size:10px;line-height:1.5}.sep{border-top:1px solid var(--line)}@media(max-width:850px){.layout{grid-template-columns:1fr}.controls{display:grid;grid-template-columns:1fr 1fr;align-items:start}.controls>h2,.controlfoot{grid-column:1/-1}.bottom{grid-template-columns:1fr 1fr}}@media(max-width:580px){.app{padding:12px}.top{flex-direction:column;gap:8px}.stats{grid-template-columns:1fr 1fr}.layout,.bottom{grid-template-columns:1fr}.controls{display:flex}.stat{padding:11px}.sectionhead{flex-wrap:wrap}#network{height:270px}}
+</style>
+</head>
+<body>
+<div class="app" id="lab">
+  <header class="top">
+    <div><div class="eyebrow">Sonapse-inspired / interactive test bench</div><h1>ODDITY<span style="color:var(--violet)"> LAB</span></h1><p class="sub">Can a synthetic neuron graft with two somas, axonal receiving branches, and multi-channel signals predict a bitstream better than a matched fixed network?</p></div>
+    <div class="status" id="stateBadge">● LIVE EXPERIMENT</div>
+  </header>
+  <section class="stats" aria-label="Live experimental metrics">
+    <div class="card stat teal"><div class="label">Fixed baseline</div><div class="number" id="baseAccuracy">—</div><div class="hint">Rolling 100 pre-update predictions</div></div>
+    <div class="card stat purple"><div class="label">Grafted candidate</div><div class="number" id="candAccuracy">—</div><div class="hint">Same input stream & initial weights</div></div>
+    <div class="card stat amber"><div class="label">Candidate advantage</div><div class="number" id="advantage">—</div><div class="hint">Percentage-point difference</div></div>
+    <div class="card stat"><div class="label">Simulation steps</div><div class="number" id="steps">0</div><div class="hint" id="edges">0 rewired edges · 0/0 connections</div></div>
+  </section>
+  <div class="layout">
+    <main class="card visual">
+      <div class="sectionhead"><h2>Live connectomes</h2><span class="small">Click a violet neuron to inject a spike</span></div>
+      <canvas id="network" aria-label="Two neural networks showing directed synapses and live activation"></canvas>
+      <div class="sectionhead charthead"><h2>Online prediction accuracy</h2><div class="legend"><span class="small"><i class="dot teal"></i>Fixed</span><span class="small"><i class="dot purple"></i>Grafted</span><span class="small">Dashed: 50% chance</span></div></div>
+      <canvas id="chart" aria-label="Rolling accuracy chart for baseline and experimental network"></canvas>
+      <div class="streambox"><div class="streamhead"><span>Latest stimulus bits (oldest → newest)</span><span id="taskLabel">Echo · 2-step lag</span></div><div class="bits" id="bits"></div></div>
+    </main>
+    <aside class="card controls">
+      <h2>Experiment controls</h2>
+      <div class="actionrow"><button type="button" class="btn primary" id="runBtn">Ⅱ Pause</button><button type="button" class="btn" id="stepBtn">+ Single step</button><button type="button" class="btn" id="resetBtn">↺ Reset</button></div>
+      <div class="group"><label class="field" for="task"><span>Prediction challenge</span></label><select id="task"><option value="echo">Delayed echo — bit from 2 steps ago</option><option value="xor">Temporal XOR — now XOR previous</option><option value="parity">Parity-3 — XOR last 3 bits</option></select></div>
+      <div class="split"><div><label class="mini-label" for="seed">Reproducible seed</label><input id="seed" type="number" value="4242" step="1" min="1" max="2147483647"></div><div><label class="mini-label" for="speed">Steps per second <span id="speedValue">24</span></label><input id="speed" type="range" min="1" max="120" value="24" step="1"></div></div>
+      <div class="sep"></div>
+      <div class="group"><div class="field"><span>Candidate graft modules</span><span>toggle = matched restart</span></div>
+      <div class="switchgrid">
+      <label class="switch"><input type="checkbox" id="dual" checked><span>Dual soma<small>Second coupled recurrent state</small></span></label>
+      <label class="switch"><input type="checkbox" id="axon" checked><span>Axonal branches<small>Outgoing-neighbour feedback</small></span></label>
+      <label class="switch"><input type="checkbox" id="vector" checked><span>Slow channel<small>Filtered vector-like signal</small></span></label>
+      <label class="switch"><input type="checkbox" id="plastic" checked><span>Plastic connectome<small>Hebbian updates + rewiring</small></span></label>
+      </div></div>
+      <div class="actionrow"><button type="button" class="btn" id="fullBtn">Enable all grafts</button><button type="button" class="btn" id="ablateBtn">Ablate all</button></div>
+      <div class="group"><label class="field" for="learn"><span>Readout learning rate</span><span id="learnValue">0.08</span></label><input type="range" id="learn" min="0" max="0.30" step="0.01" value="0.08"></div>
+      <div class="group"><label class="field" for="noise"><span>Common neural noise</span><span id="noiseValue">0.03</span></label><input type="range" id="noise" min="0" max="0.4" step="0.01" value="0.03"></div>
+      <div class="actionrow"><button type="button" class="btn shock" id="shockBtn">⚡ Shock candidate</button><button type="button" class="btn" id="driftBtn">⇄ Flip target rule</button></div>
+      <div class="controlfoot"><span class="note" id="ruleState">Current rule: normal</span><button class="btn" type="button" id="exportBtn">↓ Export run CSV</button></div>
+    </aside>
+  </div>
+  <div class="bottom">
+    <section class="card readout"><h3>Prediction monitor</h3><div class="meterhead"><span style="color:var(--teal)">Fixed probability of 1</span><strong id="baseProb">—</strong></div><div class="meter"><div class="base" id="baseMeter"></div></div><div class="meterhead"><span style="color:var(--violet)">Candidate probability of 1</span><strong id="candProb">—</strong></div><div class="meter"><div class="cand" id="candMeter"></div></div><div class="event"><span class="symbol">◆</span><span id="event">Starting two equally seeded reservoirs. Both readouts learn from each observed label.</span></div></section>
+    <section class="card explain"><h3>Interpretation protocol</h3><p>Scores are <strong>prequential</strong>: each prediction is scored <em>before</em> its label trains the readout. The baseline and candidate receive identical stimuli and noise. Grafts can help, hurt, or make no difference; no outcome is scripted.</p><details><summary>Inspect the actual model / equations</summary><div class="math"><code>xᵢ′ = tanh(0.62xᵢ + 0.58ΣⱼWᵢⱼaⱼ + 0.7uᵢs + 0.35yᵢ + 0.24zᵢ + 0.22fᵢ + εᵢ)</code><br><code>yᵢ′ = tanh(0.86yᵢ + 0.24xᵢ + 0.27ΣⱼWᵢⱼaⱼ)</code><br><code>zᵢ′ = 0.91zᵢ + 0.09ΣⱼWᵢⱼsin(φᵢⱼ)aⱼ</code><br><code>fᵢ = ΣⱼWⱼᵢaⱼ</code><br><code>aᵢ = 0.7xᵢ + 0.3yᵢ (dual enabled); otherwise xᵢ</code><br><code>p = sigmoid(b + Σᵢvᵢaᵢ)</code><br><code>vᵢ ← vᵢ + η(target − p)aᵢ</code></div><p style="margin-top:7px">Terms y, z, and f are zero when the respective candidate module is disabled. Baseline uses x only. Plasticity performs clipped Hebbian updates and occasionally replaces the weakest active edge. Activations are bounded by tanh. Noise is shared. The same 24-node recurrent reservoir and readout size are used for both agents.</p></details></section>
+  </div>
+  <div class="foot">Synthetic computational toy, not a biological claim or scientific validation of dual-soma neurons. A single seed, a short run, or a large apparent accuracy gap is insufficient evidence; repeat seeds, test ablations, and examine CSV trajectories. Manual shocks deliberately break equal conditions from that point onward.</div>
+</div>
+<script>
+(()=>{
+'use strict';
+const N=24,$=id=>document.getElementById(id),clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const C={teal:'#65e4d4',violet:'#bf93ff',amber:'#f6c779',pink:'#ff83b4'};
+function mulberry32(seed){let a=seed>>>0;return()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;}}
+function seedValue(){return clamp((Math.floor(Number($('seed').value))||4242),1,2147483647);}
+function makeAgent(seed){const rng=mulberry32(seed+117),W=new Float64Array(N*N),u=new Float64Array(N),v=new Float64Array(N),pos=[];let nEdges=0;for(let i=0;i<N;i++){u[i]=(i<5?1.18:.30)*(rng()<.5?-1:1);v[i]=(rng()-.5)*.035;let col=i<5?0:(i<15?1:2),count=col===0?5:col===1?10:9,ix=col===0?i:col===1?i-5:i-15;pos.push({x:[.12,.51,.88][col]+(rng()-.5)*.12,y:.14+(.73*(ix+.5)/count)+(rng()-.5)*.055});for(let j=0;j<N;j++){if(i!==j&&rng()<.18){W[i*N+j]=(rng()<.5?-1:1)*(.17+.43*rng());nEdges++;}}}return{rng,W,u,v,pos,x:new Float64Array(N),y:new Float64Array(N),z:new Float64Array(N),a:new Float64Array(N),bias:0,prob:.5,correct:[],losses:[],rewired:0,nEdges,shock:0};}
+let sim,run=true,lastTime=0,accum=0,lastDraw=0,selected=11,notice='Starting two equally seeded reservoirs. Both readouts learn from each observed label.';
+function settings(){return{dual:$('dual').checked,axon:$('axon').checked,vector:$('vector').checked,plastic:$('plastic').checked,task:$('task').value,seed:seedValue(),learn:Number($('learn').value),noise:Number($('noise').value)};}
+function reset(msg){const s=settings();$('seed').value=s.seed;sim={s,t:0,flip:false,bits:[],base:makeAgent(s.seed),cand:makeAgent(s.seed),randBit:mulberry32(s.seed^0x7ac11a),randNoise:mulberry32(s.seed^0x9950fe),log:[],lastTarget:null};selected=11;accum=0;notice=msg||'New matched experiment. Same seed, topology, input stream, and initial readout weights.';syncControls();render();}
+function syncControls(){$('speedValue').textContent=$('speed').value;$('learnValue').textContent=Number($('learn').value).toFixed(2);$('noiseValue').textContent=Number($('noise').value).toFixed(2);$('ruleState').textContent='Current rule: '+(sim&&sim.flip?'INVERTED':'normal');$('driftBtn').textContent=sim&&sim.flip?'⇄ Restore target rule':'⇄ Flip target rule';$('runBtn').textContent=run?'Ⅱ Pause':'▶ Resume';$('stateBadge').textContent=run?'● LIVE EXPERIMENT':'Ⅱ PAUSED';$('stateBadge').classList.toggle('off',!run);}
+function targetBit(bits,task){const n=bits.length,b=off=>n-1-off>=0?bits[n-1-off]:0;return task==='xor'?(b(0)^b(1)):task==='parity'?(b(0)^b(1)^b(2)):b(2);}
+function predict(agent){let sum=agent.bias;for(let i=0;i<N;i++)sum+=agent.v[i]*agent.a[i];return 1/(1+Math.exp(-clamp(sum,-24,24)));}
+function updateAgent(agent,bit,target,eps,candidate){
+  const s=sim.s,old=agent.a;
+  const nx=new Float64Array(N),ny=new Float64Array(N),nz=new Float64Array(N);
+  const pulse=agent.shock>0?1.7:0;
+  for(let i=0;i<N;i++){
+    let recur=0,reverse=0,slow=0;
+    for(let j=0;j<N;j++){
+      const weight=agent.W[i*N+j];
+      recur+=weight*old[j];
+      if(candidate&&s.axon) reverse+=agent.W[j*N+i]*old[j];
+      if(candidate&&s.vector) slow+=weight*Math.sin((i+1)*1.17+(j+1)*.71)*old[j];
+    }
+    nz[i]=candidate&&s.vector?(.91*agent.z[i]+.09*slow):0;
+    ny[i]=candidate&&s.dual?Math.tanh(.86*agent.y[i]+.24*agent.x[i]+.27*recur):0;
+    const spike=candidate&&pulse>0&&(i===selected||i===(selected+7)%N||i===(selected+15)%N)?pulse*(i%2?-1:1):0;
+    const drive=.62*agent.x[i]+.58*recur+.7*agent.u[i]*(bit?1:-1)
+      +(candidate&&s.dual?.35*agent.y[i]:0)
+      +(candidate&&s.vector?.24*nz[i]:0)
+      +(candidate&&s.axon?.22*reverse:0)+eps[i]+spike;
+    nx[i]=Math.tanh(drive);
+  }
+  agent.x=nx;agent.y=ny;agent.z=nz;
+  for(let i=0;i<N;i++)agent.a[i]=(candidate&&s.dual)?(.7*nx[i]+.3*ny[i]):nx[i];
+  const p=predict(agent);
+  agent.prob=p;
+  const correct=(p>=.5?1:0)===target?1:0;
+  agent.correct.push(correct);
+  agent.losses.push(-target*Math.log(Math.max(p,1e-8))-(1-target)*Math.log(Math.max(1-p,1e-8)));
+  const err=target-p;
+  for(let i=0;i<N;i++)agent.v[i]=clamp(agent.v[i]+s.learn*err*agent.a[i],-6,6);
+  agent.bias=clamp(agent.bias+.25*s.learn*err,-6,6);
+  if(candidate&&s.plastic){
+    if(sim.t%10===0){
+      for(let i=0;i<N;i++){
+        for(let j=0;j<N;j++){
+          const k=i*N+j,w=agent.W[k];
+          if(w!==0)agent.W[k]=clamp(w+.0015*(agent.a[i]*agent.a[j]-.11*w),-.8,.8);
+        }
+      }
+    }
+    if(sim.t>0&&sim.t%45===0){
+      const i=Math.floor(agent.rng()*N);
+      let worst=-1,weak=Infinity;
+      for(let j=0;j<N;j++){
+        const k=i*N+j,w=agent.W[k];
+        if(w!==0){
+          let score=Math.abs(w)*(.5+.5*Math.abs(agent.a[i]*agent.a[j]));
+          if(score<weak){weak=score;worst=k;}
+        }
+      }
+      if(worst>=0){
+        agent.W[worst]=0;
+        let options=[];
+        for(let j=0;j<N;j++)if(i!==j&&agent.W[i*N+j]===0)options.push(j);
+        if(options.length){
+          let j=options[Math.floor(agent.rng()*options.length)];
+          agent.W[i*N+j]=(agent.rng()<.5?-1:1)*(.16+.13*agent.rng());
+          agent.rewired++;
+        } else agent.nEdges--;
+      }
+    }
+  }
+  if(candidate&&agent.shock>0)agent.shock--;
+  return{p,correct};
+}
+function oneStep(){const bit=sim.randBit()<.5?0:1;sim.bits.push(bit);const raw=targetBit(sim.bits,sim.s.task),target=sim.flip?1-raw:raw,eps=Float64Array.from({length:N},()=>((sim.randNoise()+sim.randNoise()+sim.randNoise())/3-.5)*2.5*Number($('noise').value));sim.t++;const b=updateAgent(sim.base,bit,target,eps,false),c=updateAgent(sim.cand,bit,target,eps,true);sim.lastTarget=target;sim.log.push([sim.t,bit,target,b.p,c.p,b.correct,c.correct,sim.cand.rewired,sim.flip?1:0]);}
+function rolling(arr,n){if(arr.length===0)return null;const length=Math.min(arr.length,n);let sum=0;for(let i=arr.length-length;i<arr.length;i++)sum+=arr[i];return sum/length;}
+function canvas2d(id){const el=$(id),r=el.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1),w=Math.max(10,r.width),h=Math.max(10,r.height);if(el.width!==Math.round(w*dpr)||el.height!==Math.round(h*dpr)){el.width=Math.round(w*dpr);el.height=Math.round(h*dpr);}const ctx=el.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);return{ctx,w,h};}
+function drawNetwork(){const{ctx,w,h}=canvas2d('network');ctx.clearRect(0,0,w,h);ctx.fillStyle='#0c1423';ctx.fillRect(0,0,w,h);ctx.strokeStyle='#263950';ctx.setLineDash([3,6]);ctx.beginPath();ctx.moveTo(w/2,25);ctx.lineTo(w/2,h-5);ctx.stroke();ctx.setLineDash([]);[[sim.base,'FIXED / SCALAR',C.teal,0],[sim.cand,'DSAG / CANDIDATE',C.violet,1]].forEach(([a,title,color,side])=>{const x0=side*w/2,inner=w/2,px=i=>x0+12+a.pos[i].x*(inner-24),py=i=>29+a.pos[i].y*(h-45);ctx.fillStyle=color;ctx.font='bold 10px system-ui,sans-serif';ctx.textAlign='left';ctx.fillText(title,x0+14,18);ctx.font='10px system-ui,sans-serif';ctx.fillStyle='#8297b2';ctx.textAlign='right';ctx.fillText(`${a.nEdges} links`,x0+inner-14,18);for(let i=0;i<N;i++)for(let j=0;j<N;j++){const ww=a.W[i*N+j];if(ww===0)continue;const activation=Math.abs(a.a[j]);ctx.strokeStyle=ww>0?`rgba(101,228,212,${.055+.2*activation})`:`rgba(255,131,180,${.04+.19*activation})`;ctx.lineWidth=.5+.8*Math.abs(ww);ctx.beginPath();ctx.moveTo(px(j),py(j));ctx.lineTo(px(i),py(i));ctx.stroke();}for(let i=0;i<N;i++){const ac=a.a[i],x=px(i),y=py(i),r=3.0+Math.abs(ac)*4.8;if(side===1&&i===selected){ctx.strokeStyle='rgba(246,199,121,.8)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,r+5,0,Math.PI*2);ctx.stroke();}ctx.fillStyle='rgba(155,181,219,.11)';ctx.beginPath();ctx.arc(x,y,r+3,0,Math.PI*2);ctx.fill();ctx.fillStyle=ac>=0?color:C.pink;ctx.globalAlpha=.35+.65*Math.abs(ac);ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;}});}
+function drawChart(){const{ctx,w,h}=canvas2d('chart'),left=32,right=w-12,top=10,bottom=h-24;ctx.clearRect(0,0,w,h);ctx.fillStyle='#0c1423';ctx.fillRect(0,0,w,h);ctx.textAlign='right';ctx.font='10px system-ui,sans-serif';for(let pct=0;pct<=100;pct+=25){const y=bottom-(pct/100)*(bottom-top);ctx.strokeStyle=pct===50?'#526079':'#263349';ctx.setLineDash(pct===50?[5,5]:[]);ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#8294ad';ctx.fillText(pct+'%',left-6,y+3);}const view=150;const start=Math.max(0,sim.t-view),end=sim.t;function plot(a,color){if(end<2)return;ctx.beginPath();let seen=false;for(let t=start;t<end;t++){let sum=0,n=0;for(let q=Math.max(0,t-24);q<=t;q++){sum+=a.correct[q];n++;}const avg=sum/n,x=left+((t-start)/Math.max(1,view-1))*(right-left),y=bottom-avg*(bottom-top);if(!seen){ctx.moveTo(x,y);seen=true;}else ctx.lineTo(x,y);}ctx.lineWidth=2.4;ctx.strokeStyle=color;ctx.stroke();}plot(sim.base,C.teal);plot(sim.cand,C.violet);ctx.textAlign='left';ctx.fillStyle='#91a5bc';ctx.fillText(Math.max(0,end-view)+' steps',left,bottom+16);ctx.textAlign='right';ctx.fillText(end+' steps',right,bottom+16);}
+function render(){if(!sim)return;drawNetwork();drawChart();const b=rolling(sim.base.correct,100),c=rolling(sim.cand.correct,100);$('baseAccuracy').textContent=b===null?'—':(b*100).toFixed(1)+'%';$('candAccuracy').textContent=c===null?'—':(c*100).toFixed(1)+'%';$('advantage').textContent=b===null?'—':((c-b)*100>=0?'+':'')+((c-b)*100).toFixed(1)+' pp';$('steps').textContent=sim.t.toLocaleString('en-GB');$('edges').textContent=sim.cand.rewired+' rewired · '+sim.cand.nEdges+' candidate edges';$('baseProb').textContent=sim.t?(sim.base.prob*100).toFixed(1)+'%':'—';$('candProb').textContent=sim.t?(sim.cand.prob*100).toFixed(1)+'%':'—';$('baseMeter').style.width=(100*sim.base.prob)+'%';$('candMeter').style.width=(100*sim.cand.prob)+'%';$('taskLabel').textContent={echo:'Echo · 2-step lag',xor:'XOR · current + previous',parity:'Parity · last three'}[sim.s.task]+(sim.flip?' / INVERTED':'');$('event').textContent=notice+(sim.t?' · Last target: '+sim.lastTarget+'.':'');const last=sim.bits.slice(-27);$('bits').innerHTML=last.length?last.map((v,i)=>`<span class="bit ${v?'one':''} ${i===last.length-1?'newest':''}">${v}</span>`).join(''):'<span class="small">Stream begins when you press Play or Step.</span>';}
+$('runBtn').addEventListener('click',()=>{run=!run;syncControls();notice=run?'Experiment running.':'Experiment paused for inspection.';render();});$('stepBtn').addEventListener('click',()=>{run=false;syncControls();oneStep();notice='Manual single-step executed.';render();});$('resetBtn').addEventListener('click',()=>reset('Reproducible restart with selected configuration.'));
+$('task').addEventListener('change',()=>reset('Switched task and restarted both networks from the same seed.'));
+['dual','axon','vector','plastic'].forEach(id=>$(id).addEventListener('change',()=>reset('Graft configuration changed: matched restart. Compare scores after equal training durations.')));
+$('fullBtn').addEventListener('click',()=>{['dual','axon','vector','plastic'].forEach(id=>$(id).checked=true);reset('All candidate graft modules enabled. Matched restart.');});
+$('ablateBtn').addEventListener('click',()=>{['dual','axon','vector','plastic'].forEach(id=>$(id).checked=false);reset('All grafts ablated. Candidate and baseline should now behave identically.');});
+$('speed').addEventListener('input',syncControls);$('learn').addEventListener('input',()=>{sim.s.learn=Number($('learn').value);syncControls();});$('noise').addEventListener('input',()=>{sim.s.noise=Number($('noise').value);syncControls();});$('seed').addEventListener('change',()=>reset('Changed seed and reset both agents.'));
+$('shockBtn').addEventListener('click',()=>{sim.cand.shock=3;notice=`Candidate-only electrical shock queued on neurons ${selected+1}, ${(selected+7)%N+1}, ${(selected+15)%N+1}. This temporarily breaks matched conditions.`;render();});
+$('driftBtn').addEventListener('click',()=>{sim.flip=!sim.flip;notice='Abrupt rule drift: labels now '+(sim.flip?'inverted':'restored')+'. Watch adaptation and forgetting.';syncControls();render();});
+$('network').addEventListener('click',e=>{const canvas=$('network'),r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,w=r.width,h=r.height;if(x<w/2)return;let best=-1,dist=Infinity;for(let i=0;i<N;i++){const p=sim.cand.pos[i],dx=x-(w/2+12+p.x*(w/2-24)),dy=y-(29+p.y*(h-45)),d=dx*dx+dy*dy;if(d<dist){dist=d;best=i;}}if(best>=0&&dist<1000){selected=best;sim.cand.shock=3;notice=`Spike injected into candidate node ${best+1} and two coupled sites; baseline was not shocked.`;render();}});
+function exportCSV(){const headers=['step','stimulus_bit','target','fixed_probability','candidate_probability','fixed_correct','candidate_correct','candidate_rewired_edges','rule_inverted'],config=[`# ODDITY LAB export; seed=${sim.s.seed}; task=${sim.s.task}; dual=${sim.s.dual}; axon=${sim.s.axon}; slow=${sim.s.vector}; plastic=${sim.s.plastic}; learning_rate=${sim.s.learn}; noise_at_reset=${sim.s.noise}; steps=${sim.t}`];const lines=config.concat([headers.join(',')],sim.log.map(row=>row.map((v,i)=>(i===3||i===4)?v.toFixed(6):String(v)).join(',')));const blob=new Blob([lines.join('\n')+'\n'],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`oddity-lab-seed-${sim.s.seed}-step-${sim.t}.csv`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);notice=`Exported ${sim.log.length} prediction records as CSV.`;render();}
+$('exportBtn').addEventListener('click',exportCSV);
+function frame(ts){if(!lastTime)lastTime=ts;let delta=Math.min(.18,(ts-lastTime)/1000);lastTime=ts;if(run){accum+=delta*Number($('speed').value);let n=0;while(accum>=1&&n<35){oneStep();accum-=1;n++;}if(n===35)accum=0;}if(ts-lastDraw>60){render();lastDraw=ts;}requestAnimationFrame(frame);}reset('Ready: both agents start with identical weights. Toggle grafts to rerun from the same seed.');requestAnimationFrame(frame);window.addEventListener('resize',render);
+})();
+</script>
+</body>
+</html>
